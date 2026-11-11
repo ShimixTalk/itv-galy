@@ -16,7 +16,7 @@ function parseTechnical(rows){
   if(/^\s*(?:total|remarque|observation)/i.test(first))continue;
   let sm=first.match(/^(.*?)\s*\[([^\]]+)\]\s*$/);site=sm?sm[1].trim():first;stationCode=sm?sm[2]:'';
   if(!site||!row.slice(1).some(Boolean))continue;
-  headers.forEach((type,j)=>{let location=row[j+1];if(!location||!type)return;
+  headers.forEach((type,j)=>{let location=row[j+1];if(!location||!type||/^(pas de|aucun|neant|sans |non gere|non installe)/i.test(location))return;
    out.push({site,stationCode,line,mode:'Métro',name:type,category:'Locaux techniques',sub:type,local:location,access:location,reference:stationCode,notes:'Source : listing technique, ligne '+line, _row:i+1})
   });
  }
